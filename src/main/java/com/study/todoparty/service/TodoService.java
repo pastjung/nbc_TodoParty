@@ -37,13 +37,13 @@ public class TodoService {
     }
 
     public Map<String, List<TodoResponseDto>> listTodosByUser() {
-        List<Todo> todos = todoRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         Map<String, List<TodoResponseDto>> todosByUser = new HashMap<>();
+        List<Todo> todos = todoRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
 
         for (Todo todo : todos) {
             String username = todo.getUser().getUsername();
-
             List<TodoResponseDto> userTodos = todosByUser.getOrDefault(username, new ArrayList<>());
+
 
             userTodos.add(new TodoResponseDto(todo));
 
@@ -52,8 +52,8 @@ public class TodoService {
         return todosByUser;
     }
 
-    public TodoResponseDto updateTodo(Long todoId, UpdateTodoRequestDto request, User user) {
-        Todo todo = todoRepository.findById(todoId).orElseThrow(
+    public TodoResponseDto updateTodo(UpdateTodoRequestDto request, User user) {
+        Todo todo = todoRepository.findById(request.getId()).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 할일 카드 ID 입니다")
         );
 
