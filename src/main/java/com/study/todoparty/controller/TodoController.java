@@ -70,7 +70,7 @@ public class TodoController {
     // 할일카드 완료 기능 API : 완료처리한 할일 카드는 목록조회시 완료 여부 필드가 TRUE 로 내려감 (기본값은 False)
     // 조건 : 토큰을 검사한 후, 유효한 토큰이면서 해당 사용자가 작성한 할일카드 만 완료 가능
     // 반환 정보 : ResponseEntity<CommonResponse>
-    @PutMapping("/complete/{todoId}")
+    @PatchMapping("/complete/{todoId}") // Put : 전체 수정, Patch : 부분 수정
     public ResponseEntity<CommonResponseDto> completeTodo(@PathVariable Long todoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try{
             todoService.completeTodo(todoId, userDetails.getUser());
