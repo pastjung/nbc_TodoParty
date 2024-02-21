@@ -23,7 +23,7 @@ public class Todo extends TimeStamped{
     private String content;
 
     @Column
-    private Boolean completed = false;
+    private Boolean completed;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -32,5 +32,6 @@ public class Todo extends TimeStamped{
     public Todo(CreateTodoRequestDto request) {
         this.title = request.getTitle();
         this.content = request.getContent();
+        this.completed = false;
     }
 }
