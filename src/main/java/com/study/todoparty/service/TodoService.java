@@ -31,9 +31,8 @@ public class TodoService {
     }
 
     public TodoResponseDto getTodo(Long todoId) {
-        Todo todo = todoRepository.findById(todoId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 할일 카드 ID 입니다")
-        );
+        Todo todo = getTodoByID(todoId);
+
         return new TodoResponseDto(todo);
     }
 
@@ -55,9 +54,7 @@ public class TodoService {
 
     @Transactional // 수정할 때 save 를 하지 않아도 메서드가 끝날 때 변경된 값을 DB 에 자동으로 수정
     public TodoResponseDto updateTodo(UpdateTodoRequestDto request, User user) {
-        Todo todo = todoRepository.findById(request.getId()).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 할일 카드 ID 입니다")
-        );
+        Todo todo = getTodoByID(request.getId());
 
         if (!todo.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("작성자만 수정할 수 있습니다.");
@@ -70,9 +67,7 @@ public class TodoService {
     }
 
     public void completeTodo(Long todoId, User user) {
-        Todo todo = todoRepository.findById(todoId).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 할일 카드 ID 입니다")
-        );
+        Todo todo = getTodoByID(todoId);
 
         if (!todo.getUser().getId().equals(user.getId())) {
             throw new IllegalArgumentException("작성자만 완료할 수 있습니다.");
@@ -81,5 +76,11 @@ public class TodoService {
         todo.setCompleted(true);
 
         todoRepository.save(todo);
+    }
+
+    private Todo getTodoByID(Long todoId) {
+        return todoRepository.findById(todoId).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 할일 카드 ID 입니다")
+        );
     }
 }
