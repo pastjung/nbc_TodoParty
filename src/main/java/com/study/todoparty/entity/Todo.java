@@ -39,4 +39,9 @@ public class Todo extends TimeStamped{
         this.content = request.getContent();
         this.completed = false;
     }
+
+    public void setUser(User user){
+        this.user = user;
+        user.getTodo().add(this);
+    }
 }

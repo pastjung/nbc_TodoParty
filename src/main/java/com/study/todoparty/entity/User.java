@@ -28,7 +28,7 @@ public class User {
     private UserRoleEnum userRole;
 
     @OneToMany(mappedBy = "user")
-    private List<Todo> todos;
+    private List<Todo> todo;
 
     public User(String username, String password, UserRoleEnum userRole) {
         this.username = username;
