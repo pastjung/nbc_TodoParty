@@ -6,6 +6,7 @@ import com.study.todoparty.dto.responseDto.TodoResponseDto;
 import com.study.todoparty.entity.Todo;
 import com.study.todoparty.entity.User;
 import com.study.todoparty.repository.TodoRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,7 @@ public class TodoService {
         return todosByUser;
     }
 
+    @Transactional // 수정할 때 save 를 하지 않아도 메서드가 끝날 때 변경된 값을 DB 에 자동으로 수정
     public TodoResponseDto updateTodo(UpdateTodoRequestDto request, User user) {
         Todo todo = todoRepository.findById(request.getId()).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 할일 카드 ID 입니다")
@@ -63,8 +65,6 @@ public class TodoService {
 
         todo.setTitle(request.getTitle());
         todo.setContent(request.getContent());
-
-        todoRepository.save(todo);
 
         return new TodoResponseDto(todo);
     }
