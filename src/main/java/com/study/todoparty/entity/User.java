@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity(name = "User")
 @Table(name = "user")
 @Getter
@@ -24,6 +26,9 @@ public class User {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum userRole;
+
+    @OneToMany(mappedBy = "user")
+    private List<Todo> todos;
 
     public User(String username, String password, UserRoleEnum userRole) {
         this.username = username;
