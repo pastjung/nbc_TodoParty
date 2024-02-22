@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "User")
@@ -34,5 +35,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.userRole = userRole;
+        this.todo = new ArrayList<>();
     }
 }
