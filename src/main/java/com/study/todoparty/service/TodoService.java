@@ -44,7 +44,6 @@ public class TodoService {
             String username = todo.getUser().getUsername();
             List<TodoResponseDto> userTodos = todosByUser.getOrDefault(username, new ArrayList<>());
 
-
             userTodos.add(new TodoResponseDto(todo));
 
             todosByUser.put(username, userTodos);
